@@ -3,21 +3,16 @@
 build-python-app:
   name: Build Python App
   runs-on: ubuntu-latest
-  on:
+  matrix:
+    python-version: ["3.14"]
 
-    push:
-      branches: [ "main" ]
-
-  permissions:
-    contents: read
-    id-token: write
   steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
-        python-version: '3.14'
+        python-version: ${{ matrix.python-version }}
     # - name: Install dependencies
     #   run: uv pip install --system --no-cache-dir -e .
     # - name: Build and run the application
