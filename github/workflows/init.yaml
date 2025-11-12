@@ -13,7 +13,7 @@ build-python-app:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    # - name: Install dependencies
-    #   run: uv pip install --system --no-cache-dir -e .
-    # - name: Build and run the application
-    #   run: uvicorn main:app --host 0.0.0.0 --port 8000
+    - name: Install dependencies
+      run: uv pip install --system --no-cache-dir -e .
+    - name: Build and run the application
+      run: uvicorn main:app --host 0.0.0.0 --port 8000
