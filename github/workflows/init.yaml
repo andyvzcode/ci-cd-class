@@ -1,0 +1,19 @@
+
+
+build-python-app:
+  name: Build Python App
+  runs-on: ubuntu-latest
+  permissions:
+    contents: read
+    id-token: write
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    # - name: Set up Python
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: '3.14'
+    # - name: Install dependencies
+    #   run: uv pip install --system --no-cache-dir -e .
+    # - name: Build and run the application
+    #   run: uvicorn main:app --host 0.0.0.0 --port 8000
