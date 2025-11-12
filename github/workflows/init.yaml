@@ -3,6 +3,11 @@
 build-python-app:
   name: Build Python App
   runs-on: ubuntu-latest
+  on:
+  
+    push:
+      branches: [ "main" ]
+
   permissions:
     contents: read
     id-token: write
