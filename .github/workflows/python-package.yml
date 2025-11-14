@@ -56,6 +56,8 @@ jobs:
         images: ghcr.io/${{ github.repository }} # Replace with your image name
         tags: |
           type=semver,pattern={{version}} # Uses the release version as a tag
+          type=sha,prefix={{branch}}- # Tag with branch name and commit SHA
+          type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }} # Tag as 'latest' for main branch
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
