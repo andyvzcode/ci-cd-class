@@ -40,13 +40,25 @@ jobs:
 
     - name: Crear imagen docker
       run: |
-        docker build -t python-app-ci .
+        docker build -t python-app-ci-image .
       
     - name: Save Docker image to tar
-      run: docker save python-app-ci:latest -o image.tar
+      run: docker save python-app-ci-image:latest -o image.tar
 
     - name: Upload image artifact
       uses: actions/upload-artifact@v4
       with:
-        name: python-app-ci
+        name: python-app-ci-image
         path: image.tar
+    
+    - name: Descargar imagen docker
+      uses: actions/download-artifact@v4
+      with:
+        name: python-app-ci-image
+        path: image.tar
+    
+    - name: Cargar imagen docker
+      run: docker load -i image.tar
+    
+    - name: Ejecutar contenedor docker
+      run: docker run -p 8000:8000 python-app-ci-image
