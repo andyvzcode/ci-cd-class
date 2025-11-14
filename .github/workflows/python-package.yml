@@ -40,6 +40,30 @@ jobs:
     - name: Ejecutar pruebas
       run: |
         pytest tests.py
+
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository }} # Replace with your image name
+        tags: |
+          type=semver,pattern={{version}} # Uses the release version as a tag
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: . # Path to your Dockerfile context
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
     
     # - name: Descargar imagen docker
     #   uses: actions/download-artifact@v4
