@@ -30,6 +30,9 @@ jobs:
         python -m pip install flake8 pytest
         python -m pip install ruff
         python -m pip install pyright
+        python -m pip install uv
+        uv pip install --system --no-cache-dir -e .
+        uv sync
 
     - name: Validar codigo con ruff
       run: |
