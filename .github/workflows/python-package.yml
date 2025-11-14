@@ -41,7 +41,12 @@ jobs:
     - name: Crear imagen docker
       run: |
         docker build -t python-app-ci .
-    - name: Subir imagen docker a Docker Hub
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/python-app-ci:latest
+      
+    - name: Save Docker image to tar
+      run: docker save python-app-ci:latest -o image.tar
+
+    - name: Upload image artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-app-ci
+        path: image.tar
